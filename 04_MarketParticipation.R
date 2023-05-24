@@ -59,6 +59,23 @@ q16d.distr.list <- distribution.tables.function(q.number = "Q16D",
                                                 categories = 1:6) 
 
 
+#-------------
+#DATA SUMMARIES
+#-------------  
+
+#CONSUMED AT HOME
+q16a.data.sum.list <- data.summaries.function(q.number = "Q16A.mid")
+
+#GIVEN AWAY
+q16b.data.sum.list <- data.summaries.function(q.number = "Q16B.mid")
+
+#CAUGHT AND RELEASED
+q16c.data.sum.list <- data.summaries.function(q.number = "Q16C.mid")
+
+#SOLD
+q16d.data.sum.list <- data.summaries.function(q.number = "Q16D.mid")
+
+
 #--------------------------------------------------------------------------
 
 # Q17. In 2020, did you ever sell any of the fish you caught?

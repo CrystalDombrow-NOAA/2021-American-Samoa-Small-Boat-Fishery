@@ -55,7 +55,7 @@ q23.distr.list <- distribution.tables.function(q.number = "Q23.ifelse",
 # Q24. What is the length of your boat?
 
 #DATA SUMMARIES
-q24.data.sum.list <- data.summaries.function(q.number = "Q24.ifelse")
+q24.data.sum.list <- data.summaries.function(q.number = "Q24.ifelse.rm.outlier")
 
 
 #---------------------------------------------------------------------
@@ -63,7 +63,7 @@ q24.data.sum.list <- data.summaries.function(q.number = "Q24.ifelse")
 # Q25. What is the total horsepower? 
 
 #DATA SUMMARIES
-q25.data.sum.list <- data.summaries.function(q.number = "Q25.ifelse")
+q25.data.sum.list <- data.summaries.function(q.number = "Q25.ifelse.rm.outlier")
 
 
 #---------------------------------------------------------------------
@@ -71,7 +71,7 @@ q25.data.sum.list <- data.summaries.function(q.number = "Q25.ifelse")
 # Q26. In what year was the boat built?
 
 #DATA SUMMARIES
-q26.data.sum.list <- data.summaries.function(q.number = "Q26.ifelse")
+q26.data.sum.list <- data.summaries.function(q.number = "Q26.ifelse.rm.outlier")
 
 
 #---------------------------------------------------------------------
@@ -79,7 +79,7 @@ q26.data.sum.list <- data.summaries.function(q.number = "Q26.ifelse")
 # Q27. In what year did you purchase the boat you fish on?
 
 #DATA SUMMARIES
-q27.data.sum.list <- data.summaries.function(q.number = "Q27.ifelse")
+q27.data.sum.list <- data.summaries.function(q.number = "Q27.ifelse.rm.outlier")
 
 
 #---------------------------------------------------------------------
@@ -88,7 +88,7 @@ q27.data.sum.list <- data.summaries.function(q.number = "Q27.ifelse")
       # (If homebuilt – how much did it cost to build it?) 
 
 #DATA SUMMARIES
-q28.data.sum.list <- data.summaries.function(q.number = "Q28.ifelse")
+q28.data.sum.list <- data.summaries.function(q.number = "Q28.ifelse.rm.outlier")
 
 
 #---------------------------------------------------------------------
@@ -97,7 +97,7 @@ q28.data.sum.list <- data.summaries.function(q.number = "Q28.ifelse")
     # (considering age & current condition & including motor(s) & trailer) 
 
 #DATA SUMMARIES
-q29.data.sum.list <- data.summaries.function(q.number = "Q29.ifelse")
+q29.data.sum.list <- data.summaries.function(q.number = "Q29.ifelse.rm.outlier")
 
 
 #---------------------------------------------------------------------
@@ -106,5 +106,5 @@ q29.data.sum.list <- data.summaries.function(q.number = "Q29.ifelse")
     # to your vessel.
 
 #DATA SUMMARIES
-q30.data.sum.list <- data.summaries.function(q.number = "Q30.ifelse")
+q30.data.sum.list <- data.summaries.function(q.number = "Q30.ifelse.rm.outlier")
 

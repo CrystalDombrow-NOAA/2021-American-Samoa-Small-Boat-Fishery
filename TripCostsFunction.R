@@ -2,8 +2,12 @@
 #FUNCTION FOR TRIP COSTS CALCULATIONS
 #2021 AMERICAN SAMOA SMALL BOAT FISHERY COST-EARNINGS SURVEY
 #----------------
+#NOTES:
   #Only one survey response for "Other" category, but respondent was dropped in
     #data cleaning so did not include category in the code.
+
+  #**3/16: Need to fix n = nrow for each brkdown. Count manually from output list.
+
 
 #Load libraries
 library(dplyr)
@@ -26,8 +30,8 @@ trip.costs.function <- function(gear.type.trip, breakdown){
   
   #Set up dataframe for primary gear so can rbind later
   q31.32.primary <- as.cleaned.trip.costs %>%
-    select(Q31, Q31.2A, Q31.2C, Q31.2E, Q31.2F, Q31.2H, Q31.2J, brkdwn) %>%
-    rename(gear = Q31,
+    select(Q31.rm.outlier, Q31.2A, Q31.2C, Q31.2E, Q31.2F, Q31.2H, Q31.2J, brkdwn) %>%
+    rename(gear = Q31.rm.outlier,
            boat.fuel = Q31.2A,
            truck.fuel = Q31.2C,
            oil = Q31.2E,
@@ -38,8 +42,8 @@ trip.costs.function <- function(gear.type.trip, breakdown){
   
   #Set up dataframe for secondary gear so can rbind later
   q31.32.secondary <- as.cleaned.trip.costs %>%
-    select(Q32, Q32.2A, Q32.2C, Q32.2E, Q32.2F, Q32.2H, Q32.2J, brkdwn) %>%
-    rename(gear = Q32,
+    select(Q32.rm.outlier, Q32.2A, Q32.2C, Q32.2E, Q32.2F, Q32.2H, Q32.2J, brkdwn) %>%
+    rename(gear = Q32.rm.outlier,
            boat.fuel = Q32.2A,
            truck.fuel = Q32.2C,
            oil = Q32.2E,
@@ -116,8 +120,8 @@ trip.costs.function <- function(gear.type.trip, breakdown){
   #CORE OPERATING COSTS -- PRIMARY CALCULATIONS
   
   trip.costs.primary <- as.cleaned.trip.costs %>%
-    select(Q31, Q31.2A, Q31.2C, Q31.2E, Q31.2F, Q31.2H, Q31.2J, brkdwn) %>%
-    filter(Q31 == gear.type.trip) %>%
+    select(Q31.rm.outlier, Q31.2A, Q31.2C, Q31.2E, Q31.2F, Q31.2H, Q31.2J, brkdwn) %>%
+    filter(Q31.rm.outlier == gear.type.trip) %>%
     drop_na() %>%
     group_by(brkdwn) %>%
            #BOAT FUEL
@@ -179,8 +183,8 @@ trip.costs.function <- function(gear.type.trip, breakdown){
   #CORE OPERATING COSTS -- SECONDARY CALCULATIONS
   
   trip.costs.secondary <- as.cleaned.trip.costs %>%
-    select(Q32, Q32.2A, Q32.2C, Q32.2E, Q32.2F, Q32.2H, Q32.2J, brkdwn) %>%
-    filter(Q32 == gear.type.trip) %>%
+    select(Q32.rm.outlier, Q32.2A, Q32.2C, Q32.2E, Q32.2F, Q32.2H, Q32.2J, brkdwn) %>%
+    filter(Q32.rm.outlier == gear.type.trip) %>%
     drop_na() %>%
     group_by(brkdwn) %>%
            #BOAT FUEL
@@ -255,16 +259,16 @@ trip.costs.function <- function(gear.type.trip, breakdown){
   
   #Set up dataframe for primary gear so can rbind later
   q31.32.primary.occ <- as.cleaned.trip.costs %>%
-    select(Q31, Q31.2K, Q31.2L, brkdwn) %>%
-    rename(gear = Q31,
+    select(Q31.rm.outlier, Q31.2K, Q31.2L, brkdwn) %>%
+    rename(gear = Q31.rm.outlier,
            main.rep = Q31.2K,
            lost.gear = Q31.2L)
   
   
   #Set up dataframe for secondary gear so can rbind later
   q31.32.secondary.occ <- as.cleaned.trip.costs %>%
-    select(Q32, Q32.2K, Q32.2L, brkdwn) %>%
-    rename(gear = Q32,
+    select(Q32.rm.outlier, Q32.2K, Q32.2L, brkdwn) %>%
+    rename(gear = Q32.rm.outlier,
            main.rep = Q32.2K,
            lost.gear = Q32.2L)
   
@@ -304,8 +308,8 @@ trip.costs.function <- function(gear.type.trip, breakdown){
   #OCCASSIONAL MAINTENANCE COSTS -- PRIMARY CALCULATIONS
   
   trip.costs.primary.occ <- as.cleaned.trip.costs %>%
-    select(Q31, Q31.2K, Q31.2L, brkdwn) %>%
-    filter(Q31 == gear.type.trip) %>%
+    select(Q31.rm.outlier, Q31.2K, Q31.2L, brkdwn) %>%
+    filter(Q31.rm.outlier == gear.type.trip) %>%
     drop_na() %>%
     group_by(brkdwn) %>%
            #DAILY MAINTENANCE & REPAIR
@@ -334,8 +338,8 @@ trip.costs.function <- function(gear.type.trip, breakdown){
   #OCCASSIONAL MAINTENANCE COSTS -- SECONDARY CALCULATIONS
   
   trip.costs.secondary.occ <- as.cleaned.trip.costs %>%
-    select(Q32, Q32.2K, Q32.2L, brkdwn) %>%
-    filter(Q32 == gear.type.trip) %>%
+    select(Q32.rm.outlier, Q32.2K, Q32.2L, brkdwn) %>%
+    filter(Q32.rm.outlier == gear.type.trip) %>%
     drop_na() %>%
     group_by(brkdwn) %>%
     #DAILY MAINTENANCE & REPAIR
@@ -371,13 +375,13 @@ trip.costs.function <- function(gear.type.trip, breakdown){
     mutate(trip.type = "combined", .before = n)
   
   trip.costs.primary.table <- trip.costs.primary %>% 
-    select(-Q31, -Q31.2A, -Q31.2C, -Q31.2E, -Q31.2F, -Q31.2H, -Q31.2J) %>%
+    select(-Q31.rm.outlier, -Q31.2A, -Q31.2C, -Q31.2E, -Q31.2F, -Q31.2H, -Q31.2J) %>%
     unique() %>%
     mutate(n = nrow(trip.costs.primary), .before = med.boat.fuel) %>%
     mutate(trip.type = "primary", .before = n)
 
   trip.costs.secondary.table <- trip.costs.secondary %>% 
-    select(-Q32, -Q32.2A, -Q32.2C, -Q32.2E, -Q32.2F, -Q32.2H, -Q32.2J) %>%
+    select(-Q32.rm.outlier, -Q32.2A, -Q32.2C, -Q32.2E, -Q32.2F, -Q32.2H, -Q32.2J) %>%
     unique() %>%
     mutate(n = nrow(trip.costs.secondary), .before = med.boat.fuel) %>%
     mutate(trip.type = "secondary", .before = n)
@@ -392,13 +396,13 @@ trip.costs.function <- function(gear.type.trip, breakdown){
     mutate(trip.type = "combined", .before = n)
   
   trip.costs.primary.occ.table <- trip.costs.primary.occ %>% 
-    select(-Q31, -Q31.2K, -Q31.2L) %>%
+    select(-Q31.rm.outlier, -Q31.2K, -Q31.2L) %>%
     unique() %>%
     mutate(n = nrow(trip.costs.primary.occ), .before = med.main.rep) %>%
     mutate(trip.type = "primary", .before = n)
   
   trip.costs.secondary.occ.table <- trip.costs.secondary.occ %>% 
-    select(-Q32, -Q32.2K, -Q32.2L)%>%
+    select(-Q32.rm.outlier, -Q32.2K, -Q32.2L)%>%
     unique() %>%
     mutate(n = nrow(trip.costs.secondary.occ), .before = med.main.rep) %>%
     mutate(trip.type = "secondary", .before = n)

@@ -82,6 +82,9 @@ q4.nets.yesno.list <- distribution.function(q.number = "Q4E.yesno")
 q4.other.yesno.list <- distribution.function(q.number = "Q4F.yesno")
 
 
+#BOTTOMFISH COMBINED -- for brochure
+q4.bf.combined.yesno.list <- distribution.function(q.number = "Q4.bf.yesno")
+
 
 #------------------------
 #DISTRIBUTION TABLES
@@ -110,6 +113,20 @@ q4.nets.distr.list <- distribution.tables.function(q.number = "Q4E",
 #OTHER
 q4.other.distr.list <- distribution.tables.function(q.number = "Q4F",
                                                     categories = 1:6)
+
+#------------------------
+#BOTTOMFISH TRIPS %
+#------------------------
+
+#Calculate average percent of bottomfish fisher trips that were bottomfishing
+q4.bottomfish.trips <- as.sbs.data.cleaned %>%
+  select(Q4.bottomfish, Survey, Q4B, Q4C, Q4B.mid, Q4C.mid, Q3.mid.ifelse) %>% 
+  filter(Q4.bottomfish == "bottomfish") %>% 
+  mutate(Q4BC.tot.percent = select(., Q4B.mid:Q4C.mid) %>% 
+           rowSums(na.rm = T)) %>%
+  mutate(Q4BC.tot.percent = Q4BC.tot.percent * .01) %>%
+  mutate(bf.trips = Q4BC.tot.percent * Q3.mid.ifelse) %>%
+  mutate(avg.bf.trips = round(mean(bf.trips)))
 
 
 #---------------------------------------------------------------------------
@@ -208,8 +225,23 @@ q12.data.sum.list <- data.summaries.function(q.number = "Q12.ifelse")
 #DISTRIBUTION
   #Include 0’s because they may be catching other types.
 q12.distr.list <- distribution.tables.function(q.number = "Q12A",
-                                               categories = 1:6)
+                                               categories = 1:6) 
 
+
+#---------------------------------------------------------------------------
+
+#Q9-12: Aggregate catch sums, to compare to 2020 ACL's & creel estimates.
+
+q9.12.aggregate.catch <- as.sbs.data.cleaned %>%
+  select(Q9.ifelse:Q12.ifelse) %>%
+  mutate(pelagics = round(sum(Q9.ifelse, na.rm = T)),
+         deep.bf = round(sum(Q10.ifelse, na.rm = T)),
+         shallow.bf = round(sum(Q11.ifelse, na.rm = T)),
+         reef.fish = round(sum(Q12.ifelse, na.rm = T))) %>%
+  select(-Q9.ifelse, -Q10.ifelse, -Q11.ifelse, -Q12.ifelse) %>%
+  unique() %>%
+  mutate(total.bf = sum(deep.bf, shallow.bf))
+  
 
 #---------------------------------------------------------------------------
 

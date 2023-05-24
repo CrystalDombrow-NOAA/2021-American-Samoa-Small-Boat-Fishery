@@ -1,7 +1,7 @@
 ##############
 # Title: 2021 American Samoa small boat fishery cost-earnings survey
 # Author: Crystal Dombrow
-# Date: October 2022
+# Date: March 2023
 ##############
 
 #----------------------------
@@ -22,7 +22,7 @@
         # questions, and generate lists or R objects for all calculations.
         # In each script, the outputs are identified by survey question number.
 
-   #2. "Data" Folder 
+   #2. "Data" folder 
      # Contains data cleaning script, data cleaning documentation, & all data sets:
        # AS PIFSC Data File_v2_ORIGINAL.xlsx: original raw survey data
        # AS PIFSC Data File_v2.xlsx: raw survey data edited to match hard copies
@@ -31,6 +31,8 @@
          # AS_DataCleaningDocumentation.docx
        # AS_SBF_2021_DataCleaned.csv: cleaned survey data output from this R 
          # program.
+       # "2020 Census data" folder: contains select data from the 2020 Census &
+         # calculations for our Admin report demographics section.
    
    #3. "Functions" folder
      # Contains scripts that run the functions for the data analysis scripts,
@@ -45,6 +47,7 @@
    #5. "Tables" folder
      # Contains .csv files of output tables generated for most survey questions.
        # The type of calculation is indicated next to the survey question number.
+     # Also contains several tables created in Excel, noted by the .xlsx extension.
     
 
 

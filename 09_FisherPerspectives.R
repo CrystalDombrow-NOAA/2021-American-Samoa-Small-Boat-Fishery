@@ -130,6 +130,35 @@ q46g.distr.list <- distribution.tables.function(q.number = "Q46G",
 
 #---------------------------------------------------------------------------
 
+#Need gap analysis for report, Q45-46.
+
+q45.46.need.gap.analysis <- as.sbs.data.cleaned %>%
+  select(Q45A:Q46H) %>%
+  mutate(Q45A = round(mean(Q45A, na.rm = T), 1),
+         Q45B = round(mean(Q45B, na.rm = T), 1),
+         Q45C = round(mean(Q45C, na.rm = T), 1),
+         Q45D = round(mean(Q45D, na.rm = T), 1),
+         Q45E = round(mean(Q45E, na.rm = T), 1),
+         Q45F = round(mean(Q45F, na.rm = T), 1),
+         Q45G = round(mean(Q45G, na.rm = T), 1),
+         Q45H = round(mean(Q45H, na.rm = T), 1),
+         Q46A = round(mean(Q46A, na.rm = T), 1),
+         Q46B = round(mean(Q46B, na.rm = T), 1),
+         Q46C = round(mean(Q46C, na.rm = T), 1),
+         Q46D = round(mean(Q46D, na.rm = T), 1),
+         Q46E = round(mean(Q46E, na.rm = T), 1),
+         Q46F = round(mean(Q46F, na.rm = T), 1),
+         Q46G = round(mean(Q46G, na.rm = T), 1),
+         Q46H = round(mean(Q46H, na.rm = T), 1)) %>%
+  unique() %>%
+  mutate(avg.importance = mean(Q45A:Q45F),
+         avg.satisfaction = mean(Q46A:Q46G))
+
+
+#---------------------------------------------------------------------------
+
+# Q42. Why do you feel this way? (more or less future fishing from Q41)
+
 # Q47. Do you have any suggestions for how American Samoa’s fisheries should be 
   # managed or topics that you feel need further study?
 
@@ -140,9 +169,9 @@ q46g.distr.list <- distribution.tables.function(q.number = "Q46G",
 # Q49. What are the main reasons you made those changes?
 
 
-q47.48.49.open.ended <- as.sbs.data.cleaned %>%
-  select(Q47:Q49)
+q42.47.48.49.open.ended <- as.sbs.data.cleaned %>% 
+  select(Survey, Q42, Q47:Q49)
 
-write.csv(q47.48.49.open.ended, "Tables/Q47.48.49_openended.csv", 
+write.csv(q42.47.48.49.open.ended, "Tables/Q42.47.48.49_openended.csv", 
           row.names = F)
 

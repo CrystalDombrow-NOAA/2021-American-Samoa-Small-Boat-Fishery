@@ -376,13 +376,13 @@ distribution.tables.function <- function(q.number, categories){
   #Create objects for percentages below
   q.bottomfish <- as.cleaned.dist.fun %>%
     filter(!is.na(q.num)) %>%
-    filter(Q4.bottomfish >= 4)
+    filter(Q4.bottomfish == "bottomfish")
   
   
   #Calculate distribution, by bottomfish
   q.bottomfish.per <-  as.cleaned.dist.fun %>%
     select(q.num, Q4.bottomfish) %>%
-    filter(Q4.bottomfish >= 4) %>%
+    filter(Q4.bottomfish == "bottomfish") %>%
     group_by(q.num) %>%
     drop_na() %>%
     mutate(percent = round(100 * n() / nrow(q.bottomfish), 1)) %>%

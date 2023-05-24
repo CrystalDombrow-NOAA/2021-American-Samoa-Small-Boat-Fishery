@@ -12,6 +12,7 @@ library(tidyverse)
 library(dplyr)
 library(doBy)
 library(naniar)
+library(doBy)
 
 
 #Import data set. Originally, data set was an .xlsx file; author saved the .xlsx 
@@ -253,6 +254,8 @@ columns.for.ifelses <- cols.to.numeric %>%
        Q4D.yesno = ifelse(Q4D > 1, "yes", "no"),
        Q4E.yesno = ifelse(Q4E > 1, "yes", "no"),
        Q4F.yesno = ifelse(Q4F > 1, "yes", "no"),
+       #make new variable that combines bottomfish for brochure
+       Q4.bf.yesno = ifelse(Q4B.yesno == "yes", Q4B.yesno, Q4C.yesno),
        Q9.ifelse = ifelse(!is.na(Q9B), Q9B, Q9A.mid), 
        Q10.ifelse = ifelse(!is.na(Q10B), Q10B, Q10A.mid),
        Q11.ifelse = ifelse(!is.na(Q11B), Q11B, Q11A.mid),
@@ -279,7 +282,26 @@ columns.for.ifelses <- cols.to.numeric %>%
        Q27.ifelse = ifelse(Q22.chr == "no", 77, Q27),
        Q28.ifelse = ifelse(Q22.chr == "no", 77, Q28),
        Q29.ifelse = ifelse(Q22.chr == "no", 77, Q29),
-       Q30.ifelse = ifelse(Q22.chr == "no", 77, Q30))
+       Q30.ifelse = ifelse(Q22.chr == "no", 77, Q30),
+       #MANUALLY remove outlier from vessel characteristics
+       Q24.ifelse.rm.outlier = 
+         ifelse(Survey == "PPP_SCAN_0166", 77, Q24.ifelse),
+       Q25.ifelse.rm.outlier = 
+         ifelse(Survey == "PPP_SCAN_0166", 77, Q25.ifelse),
+       Q26.ifelse.rm.outlier = 
+         ifelse(Survey == "PPP_SCAN_0166", 77, Q26.ifelse),
+       Q27.ifelse.rm.outlier = 
+         ifelse(Survey == "PPP_SCAN_0166", 77, Q27.ifelse),
+       Q28.ifelse.rm.outlier = 
+         ifelse(Survey == "PPP_SCAN_0166", 77, Q28.ifelse),
+       Q29.ifelse.rm.outlier = 
+         ifelse(Survey == "PPP_SCAN_0166", 77, Q29.ifelse),
+       Q30.ifelse.rm.outlier = 
+         ifelse(Survey == "PPP_SCAN_0166", 77, Q30.ifelse),
+       #MANUALLY remove outliers from trip costs
+       Q31.rm.outlier = ifelse(Survey == "PPP_SCAN_0153", 77, Q31),
+       Q32.rm.outlier = ifelse(Survey == "PPP_SCAN_0164", 77, Q32),
+       Q32.rm.outlier = ifelse(Survey == "PPP_SCAN_0166", 77, Q32.rm.outlier))
 
 
 #Remove 0's for catch quantity questions
@@ -440,6 +462,30 @@ create.full.sample.column <- create.island.column %>%
 
 #Change object name to reflect that data cleaning is finished.
 as.sbs.data.cleaned <- create.full.sample.column 
+
+
+#Remove unneeded objects to tidy up workspace. 
+  #Retains ONLY as.sbs.data.cleaned & as.sbs.data.raw
+rm("cols.to.numeric",
+   "columns.for.chr.recodes",
+   "columns.for.ifelses",
+   "columns.for.midpoint.recodes",
+   "create.full.sample.column",
+   "create.island.column",
+   "create.species.groups",
+   "make.bottomfish.uniform",
+   "recode.midpoints.chrs",
+   "recode.na",
+   "recode.na.again",
+   "recode.strings",
+   "recode.values",
+   "remove.cols",
+   "remove.duplicate.surveys",
+   "remove.longliners",
+   "remove.na.rows",
+   "remove.nonboat.rows",
+   "remove.zeros.catch",
+   "rename.cols")
 
 
 #Save as a CSV in the Data folder.
