@@ -28,7 +28,9 @@
        # AS PIFSC Data File_v2.xlsx: raw survey data edited to match hard copies
        # AS PIFSC Data File_v2_manual.csv: manually cleaned raw survey data as 
          # input for this R program. Data cleaning steps are described in: 
-         # AS_DataCleaningDocumentation.docx
+         # AS_DataCleaningDocumentation.pdf
+       # AS_FishNames.pdf: Details the decisions made to translate fish names
+         # from the survey questionnaire.
        # AS_SBF_2021_DataCleaned.csv: cleaned survey data output from this R 
          # program.
        # "2020 Census data" folder: contains select data from the 2020 Census &
