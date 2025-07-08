@@ -314,3 +314,22 @@ q43h.spp.distr.list <- distribution.function(q.number = "Q43H.spp")
 #q43i.distr.list <- distribution.function(q.number = "Q43I") 
 q43i.spp.distr.list <- distribution.function(q.number = "Q43I.spp") 
 
+
+#--------------
+#--------------
+#Combined primary, secondary, tertiary for Mia//Fish Flow, July 2024
+
+#Combine columns, individual species then groups
+Q43.sell <- as.sbs.data.cleaned %>% 
+  select(Q43A, Q43B, Q43C)
+
+
+stacked_df <- gather(Q43.sell, value = "sell")
+
+# Select only the Stacked_Column
+stacked_df <- stacked_df[, "sell", drop = FALSE]
+
+q43.sell.table <- distribution.function(q.number = "Q43I.spp") 
+
+              
+              

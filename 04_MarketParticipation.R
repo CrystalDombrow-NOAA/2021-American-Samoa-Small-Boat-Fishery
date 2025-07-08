@@ -136,6 +136,31 @@ q18.table <- rbind(q18.full.sample.where.sell,
   unique() 
 
   write.csv(q18.table, paste("Tables/Q18_wheresell.csv"), row.names = F)
+  
+  
+  
+  #------------
+  #codebook note: 1 = yes, 2 = no
+  
+  #Fagatogo marketplace
+  q18a.distr.list <- distribution.tables.function(q.number = "Q18A.ifelse",
+                                                  categories = 1:2) 
+  
+  #restaurants/stores
+  q18b.distr.list <- distribution.tables.function(q.number = "Q18B.ifelse",
+                                                  categories = 1:2)
+  
+  #roadside/farmer's markets
+  q18c.distr.list <- distribution.tables.function(q.number = "Q18C.ifelse",
+                                                  categories = 1:2)
+  
+  #friends/neighbors/coworkers
+  q18d.distr.list <- distribution.tables.function(q.number = "Q18D.ifelse",
+                                                  categories = 1:2)
+  
+  #other
+  q18e.distr.list <- distribution.tables.function(q.number = "Q18E.ifelse",
+                                                  categories = 1:2)
 
 
 #--------------------------------------------------------------------------
