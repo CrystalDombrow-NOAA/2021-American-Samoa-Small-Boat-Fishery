@@ -67,10 +67,7 @@ rename.cols <- remove.duplicate.surveys %>%
 #Assume 77 and 99 are missing values and recode to NA. Repeated below; this 
   #repetition reduces the chance of errors in chunks below.
 recode.na <- rename.cols %>% 
-  na_if(99) %>%
-  na_if(77) %>%
-  na_if("N/A") %>%
-  na_if("n/a")
+  mutate(across(everything(), ~if_else(.x == 99 | .x == 77 | .x == "N/A" | .x == "n/a", NA, .x)))
 
 
 #Recoding numeric and some character values for data cleaning.
@@ -393,7 +390,7 @@ recode.strings <- remove.zeros.catch %>%
 
 #For 77's added since above step, assume 77 is a missing value & recode to NA.
 recode.na.again <- recode.strings %>% 
-  na_if(77) 
+  mutate(across(everything(), ~if_else(.x == 77, NA, .x)))
 
 
 #Make bottomfish variable uniform for section breakdowns later
