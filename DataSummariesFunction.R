@@ -114,6 +114,64 @@ data.summaries.function <- function(q.number){
   
 
   #-------------------- 
+  #TROLLING
+  
+  #Calculate data summaries
+  q.data.sum.trolling <- as.cleaned.data.sum.fun %>%
+    select(q.num, Q4.trolling) %>%
+    drop_na() %>%
+    mutate(mean = round(mean(q.num, na.rm = T), 1),
+           std.err = round(std.error(q.num, na.rm = T), 1),
+           med = round(median(q.num, na.rm = T), 1),
+           min = round(min(q.num, na.rm = T), 1),
+           max = round(max(q.num, na.rm = T), 1))
+  
+  
+  #Calculate number of trolling observations for table
+  q.trolling.rows <- q.data.sum.trolling %>%
+    drop_na() %>%
+    nrow() 
+  
+  #Create data frame to later rbind into a table
+  q.trolling.sum <- q.data.sum.trolling %>%
+    mutate(n = q.trolling.rows, .before = mean) %>%
+    mutate(breakdown = Q4.trolling, .before = n)
+  
+  #Remove unneeded rows and select unique breakdown values
+  q.trolling.sum <-  q.trolling.sum[-c(1:2)] %>%
+    unique()
+  
+  
+  #-------------------- 
+  #REEF
+  
+  #Calculate data summaries
+  q.data.sum.reef <- as.cleaned.data.sum.fun %>%
+    select(q.num, Q4.reef) %>%
+    drop_na() %>%
+    mutate(mean = round(mean(q.num, na.rm = T), 1),
+           std.err = round(std.error(q.num, na.rm = T), 1),
+           med = round(median(q.num, na.rm = T), 1),
+           min = round(min(q.num, na.rm = T), 1),
+           max = round(max(q.num, na.rm = T), 1))
+  
+  
+  #Calculate number of reef observations for table
+  q.reef.rows <- q.data.sum.reef %>%
+    drop_na() %>%
+    nrow() 
+  
+  #Create data frame to later rbind into a table
+  q.reef.sum <- q.data.sum.reef %>%
+    mutate(n = q.reef.rows, .before = mean) %>%
+    mutate(breakdown = Q4.reef, .before = n)
+  
+  #Remove unneeded rows and select unique breakdown values
+  q.reef.sum <-  q.reef.sum[-c(1:2)] %>%
+    unique()
+  
+  
+  #-------------------- 
   #FISHER TYPE
   
   #Calculate data summaries
@@ -276,7 +334,9 @@ data.summaries.function <- function(q.number){
                           q.pri.mot.sum,
                           q.age.sum,
                           q.race.sum,
-                          q.bottomfish.sum) %>%
+                          q.bottomfish.sum,
+                          q.trolling.sum,
+                          q.reef.sum) %>%
     t()
   
   #Save final table 
@@ -291,6 +351,8 @@ data.summaries.function <- function(q.number){
   q.output.list <- list("q.data.sum.full.sample" = q.data.sum.full.sample,
                         "q.data.sum.isl" = q.data.sum.isl,
                         "q.data.sum.bottomfish" = q.data.sum.bottomfish,
+                        "q.data.sum.trolling" = q.data.sum.trolling,
+                        "q.data.sum.reef" = q.data.sum.reef,
                         "q.data.sum.crew" = q.data.sum.crew,
                         "q.data.sum.race" = q.data.sum.race,
                         "q.data.sum.age" = q.data.sum.age,

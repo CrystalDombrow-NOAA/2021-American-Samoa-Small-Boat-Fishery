@@ -240,10 +240,14 @@ cols.to.numeric <- recode.midpoints.chrs %>%
 #Create new columns for combinations of variables, using ifelse statements
 columns.for.ifelses <- cols.to.numeric %>%
   mutate(Q3.mid.ifelse = ifelse(is.na(Q3A), Q3B.mid, Q3A),
-       #Create bottomfish variable, anyone reporting Q4 >= 40% bottomfish fishing
+       #Create bottomfish variable, anyone reporting Q4 >= 40% (combined deep and shallow) bottomfish fishing
        Q4B.ifelse = ifelse(Q4B >= 4, Q4B, 77),
        Q4C.ifelse = ifelse(Q4C >= 4, Q4C, 77),
        Q4.bottomfish = ifelse(Q4B.ifelse <= 6, Q4B.ifelse, Q4C.ifelse),
+       #Create trolling variable for SAFE reports
+       Q4.trolling = ifelse(Q4D >= 4, "trolling", NA),
+       #Create reef variable for SAFE reports
+       Q4.reef = ifelse(Q4E >= 4 | Q4A >= 4, "reef", NA),
        #Regular ifelse's
        Q4A.yesno = ifelse(Q4A > 1, "yes", "no"),
        Q4B.yesno = ifelse(Q4B > 1, "yes", "no"),
@@ -455,6 +459,16 @@ create.full.sample.column <- create.island.column %>%
                               "2" = "full sample",
                               "3" = "full sample",
                               "4" = "full sample"))
+         # #Primary target ##9/17/25: Tried this code to do data breakdown by fishery for SAFE report, gave few results, using >40% for each like we did in bottomfish section
+         # primary.target = ifelse(Q4D.mid > Q4A.mid + Q4B.mid + Q4C.mid + 
+         #                           Q4E.mid + Q4F.mid, "trolling",
+         #                         ifelse(Q4B.mid + Q4C.mid > Q4A.mid + Q4C.mid +
+         #                                  Q4D.mid + Q4E.mid + Q4F.mid,
+         #                                  "bottomfish", 
+         #                                ifelse(Q4A.mid + Q4E.mid > Q4B.mid + 
+         #                                         Q4C.mid + Q4D.mid + Q4F.mid, 
+         #                                                "reef", #maybe also Q4A
+         #                                              "other"))))
 
 
 #Change object name to reflect that data cleaning is finished.

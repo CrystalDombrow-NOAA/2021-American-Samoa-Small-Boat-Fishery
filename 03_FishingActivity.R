@@ -279,39 +279,39 @@ q32.distr.list <- distribution.tables.function(q.number = "Q32",
 #-----------
 #To sell?
 
-#q43a.distr.list <- distribution.function(q.number = "Q43A") 
+q43a.distr.list <- distribution.function(q.number = "Q43A") 
 q43a.spp.distr.list <- distribution.function(q.number = "Q43A.spp") 
 
-#q43b.distr.list <- distribution.function(q.number = "Q43B") 
+q43b.distr.list <- distribution.function(q.number = "Q43B") 
 q43b.spp.distr.list <- distribution.function(q.number = "Q43B.spp") 
 
-#q43c.distr.list <- distribution.function(q.number = "Q43C") 
+q43c.distr.list <- distribution.function(q.number = "Q43C") 
 q43c.spp.distr.list <- distribution.function(q.number = "Q43C.spp") 
 
 
 #-----------
 #To keep for self-consumption?
 
-#q43d.distr.list <- distribution.function(q.number = "Q43D") 
+q43d.distr.list <- distribution.function(q.number = "Q43D") 
 q43d.spp.distr.list <- distribution.function(q.number = "Q43D.spp") 
 
-#q43e.distr.list <- distribution.function(q.number = "Q43E") 
+q43e.distr.list <- distribution.function(q.number = "Q43E") 
 q43e.spp.distr.list <- distribution.function(q.number = "Q43E.spp") 
 
-#q43f.distr.list <- distribution.function(q.number = "Q43F") 
+q43f.distr.list <- distribution.function(q.number = "Q43F") 
 q43f.spp.distr.list <- distribution.function(q.number = "Q43F.spp") 
 
 
 #-----------
 # To give away?
 
-#q43g.distr.list <- distribution.function(q.number = "Q43G") 
+q43g.distr.list <- distribution.function(q.number = "Q43G") 
 q43g.spp.distr.list <- distribution.function(q.number = "Q43G.spp") 
 
-#q43h.distr.list <- distribution.function(q.number = "Q43H") 
+q43h.distr.list <- distribution.function(q.number = "Q43H") 
 q43h.spp.distr.list <- distribution.function(q.number = "Q43H.spp") 
 
-#q43i.distr.list <- distribution.function(q.number = "Q43I") 
+q43i.distr.list <- distribution.function(q.number = "Q43I") 
 q43i.spp.distr.list <- distribution.function(q.number = "Q43I.spp") 
 
 
@@ -331,5 +331,6 @@ stacked_df <- stacked_df[, "sell", drop = FALSE]
 
 q43.sell.table <- distribution.function(q.number = "Q43I.spp") 
 
-              
-              
+
+
+

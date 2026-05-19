@@ -111,6 +111,12 @@ q18.isl.where.sell <- where.sell.function(breakdown = "Island")
 #BOTTOMFISH
 q18.bottomfish.where.sell <- where.sell.function(breakdown = "Q4.bottomfish")
 
+#TROLLING
+q18.trolling.where.sell <- where.sell.function(breakdown = "Q4.trolling")
+
+#REEF FISH
+q18.reef.where.sell <- where.sell.function(breakdown = "Q4.reef")
+
 #FISHER TYPE
 q18.crew.where.sell <- where.sell.function(breakdown = "Q1.combo")
 
@@ -132,7 +138,9 @@ q18.table <- rbind(q18.full.sample.where.sell,
                    q18.pri.mot.where.sell,
                    q18.age.where.sell,
                    q18.samoan.where.sell,
-                   q18.bottomfish.where.sell) %>%
+                   q18.bottomfish.where.sell,
+                   q18.trolling.where.sell,
+                   q18.reef.where.sell) %>%
   unique() 
 
   write.csv(q18.table, paste("Tables/Q18_wheresell.csv"), row.names = F)

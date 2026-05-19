@@ -80,7 +80,43 @@ distribution.function <- function(q.number){
     group_by(q.num) %>%
     drop_na() %>%
     mutate(percent = round(100 * n() / nrow(q.bottomfish), 1))
-
+  
+  #-----------------------------------------------------
+  #TROLLING DISTRIBUTION
+  
+  #Create objects for percentages below
+  q.trolling <- as.cleaned.dist.fun %>%
+    filter(!is.na(q.num)) %>%
+    filter(Q4.trolling == "trolling")
+  
+  
+  #Calculate distribution, by trolling
+  q.trolling.per <-  as.cleaned.dist.fun %>%
+    select(q.num, Q4.trolling) %>%
+    filter(Q4.trolling == "trolling") %>%
+    group_by(q.num) %>%
+    drop_na() %>%
+    mutate(percent = round(100 * n() / nrow(q.trolling), 1)) %>%
+    arrange(q.num)
+  
+  
+  #-----------------------------------------------------
+  #REEF DISTRIBUTION
+  
+  #Create objects for percentages below
+  q.reef <- as.cleaned.dist.fun %>%
+    filter(!is.na(q.num)) %>%
+    filter(Q4.reef == "reef")
+  
+  
+  #Calculate distribution, by reef
+  q.reef.per <-  as.cleaned.dist.fun %>%
+    select(q.num, Q4.reef) %>%
+    filter(Q4.reef == "reef") %>%
+    group_by(q.num) %>%
+    drop_na() %>%
+    mutate(percent = round(100 * n() / nrow(q.reef), 1)) %>%
+    arrange(q.num)
   
   
   #--------------------
@@ -219,6 +255,12 @@ distribution.function <- function(q.number){
   q.bottomfish.per <- q.bottomfish.per %>%
     doBy::renameCol("q.num", q.number)
   
+  q.trolling.per <- q.trolling.per %>%
+    doBy::renameCol("q.num", q.number)
+  
+  q.reef.per <- q.reef.per %>%
+    doBy::renameCol("q.num", q.number)
+  
   q.crew.per <- q.crew.per %>% 
     doBy::renameCol("q.num", q.number)
   
@@ -251,6 +293,8 @@ distribution.function <- function(q.number){
                         "q.tutuila.per" = q.tutuila.per,
                         "q.manua.isl.per" = q.manua.isl.per,
                         "q.bottomfish.per" = q.bottomfish.per,
+                        "q.trolling.per" = q.trolling.per,
+                        "q.reef.per" = q.reef.per,
                         "q.crew.per" = q.crew.per,
                         "q.boat.owner.per" = q.boat.owner.per,
                         "q.samoan.per" = q.samoan.per,

@@ -408,6 +408,80 @@ distribution.tables.function <- function(q.number, categories){
   
   
   #-----------------------------------------------------
+  #TROLLING DISTRIBUTION
+  
+  #Create objects for percentages below
+  q.trolling <- as.cleaned.dist.fun %>%
+    filter(!is.na(q.num)) %>%
+    filter(Q4.trolling == "trolling")
+  
+  
+  #Calculate distribution, by trolling
+  q.trolling.per <-  as.cleaned.dist.fun %>%
+    select(q.num, Q4.trolling) %>%
+    filter(Q4.trolling == "trolling") %>%
+    group_by(q.num) %>%
+    drop_na() %>%
+    mutate(percent = round(100 * n() / nrow(q.trolling), 1)) %>%
+    arrange(q.num)
+  
+  
+  
+  #Calculate number of observations for table
+  q.trolling.rows <- q.trolling.per %>%
+    nrow()
+  
+  
+  #Create data frame to later rbind into a table  
+  q.trolling.sum <- q.trolling.per %>%
+    unique() %>%
+    right_join(data.frame(q.num = categories)) %>%
+    mutate(trolling = ifelse(is.na(percent), 0, percent)) %>%
+    arrange(q.num) %>%
+    t() %>%
+    as.data.frame() %>%
+    slice(-c(1:3)) %>%
+    mutate(n = q.trolling.rows, .before = V1)
+  
+  
+  #-----------------------------------------------------
+  #REEF DISTRIBUTION
+  
+  #Create objects for percentages below
+  q.reef <- as.cleaned.dist.fun %>%
+    filter(!is.na(q.num)) %>%
+    filter(Q4.reef == "reef")
+  
+  
+  #Calculate distribution, by reef
+  q.reef.per <-  as.cleaned.dist.fun %>%
+    select(q.num, Q4.reef) %>%
+    filter(Q4.reef == "reef") %>%
+    group_by(q.num) %>%
+    drop_na() %>%
+    mutate(percent = round(100 * n() / nrow(q.reef), 1)) %>%
+    arrange(q.num)
+  
+  
+  
+  #Calculate number of observations for table
+  q.reef.rows <- q.reef.per %>%
+    nrow()
+  
+  
+  #Create data frame to later rbind into a table  
+  q.reef.sum <- q.reef.per %>%
+    unique() %>%
+    right_join(data.frame(q.num = categories)) %>%
+    mutate(reef = ifelse(is.na(percent), 0, percent)) %>%
+    arrange(q.num) %>%
+    t() %>%
+    as.data.frame() %>%
+    slice(-c(1:3)) %>%
+    mutate(n = q.reef.rows, .before = V1)
+  
+  
+  #-----------------------------------------------------
   #-----------------------------------------------------
   #Rbind summary objects together for glory
   q.final.table <- rbind(q.full.sample.sum,
@@ -421,7 +495,9 @@ distribution.tables.function <- function(q.number, categories){
                          q.over.45.sum,
                          q.samoan.sum,
                          q.non.samoan.sum,
-                         q.bottomfish.sum)
+                         q.bottomfish.sum,
+                         q.trolling.sum,
+                         q.reef.sum)
   
   
   #Save final table
@@ -445,7 +521,9 @@ distribution.tables.function <- function(q.number, categories){
                         "q.over.45.per" = q.over.45.per,
                         "q.samoan.per" = q.samoan.per,
                         "q.non.samoan.per" = q.non.samoan.per,
-                        "q.bottomfish.per" = q.bottomfish.per)
+                        "q.bottomfish.per" = q.bottomfish.per,
+                        "q.trolling.per" = q.trolling.per,
+                        "q.reef.per" = q.reef.per)
   
   
   return(q.output.list)
