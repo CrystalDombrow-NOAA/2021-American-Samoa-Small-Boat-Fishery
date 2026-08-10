@@ -244,6 +244,7 @@ columns.for.ifelses <- cols.to.numeric %>%
        Q4B.ifelse = ifelse(Q4B >= 4, Q4B, 77),
        Q4C.ifelse = ifelse(Q4C >= 4, Q4C, 77),
        Q4.bottomfish = ifelse(Q4B.ifelse <= 6, Q4B.ifelse, Q4C.ifelse),
+       # not using 8/5/26: Q4.bottomfish.any = if_else(Q4B > 1 | Q4C > 1, "Q4.bottomfish.any", NA), #for fact sheet tables to avoid confusion between Q #'s and results
        #Create trolling variable for SAFE reports
        Q4.trolling = ifelse(Q4D >= 4, "trolling", NA),
        #Create reef variable for SAFE reports
@@ -260,7 +261,11 @@ columns.for.ifelses <- cols.to.numeric %>%
        Q9.ifelse = ifelse(!is.na(Q9B), Q9B, Q9A.mid), 
        Q10.ifelse = ifelse(!is.na(Q10B), Q10B, Q10A.mid),
        Q11.ifelse = ifelse(!is.na(Q11B), Q11B, Q11A.mid),
+       Q10.Q11.combined = (Q10.ifelse + Q11.ifelse), #for fact sheet tables 
+       Q10.Q11.any = ifelse(Q10.Q11.combined > 1, "Q10.11.bottomfish.catch.lbs", NA), #for fact sheet tables to avoid confusion between Q #'s and results
        Q12.ifelse = ifelse(!is.na(Q12B), Q12B, Q12A.mid),
+       #for 2026 fact sheet
+       Q16B.any = ifelse(Q16B > 1, 1, 2), #1 = yes, 2 = no
        #Create ifelse variables for those who sold fish only
        Q18A.ifelse = ifelse(Q17.chr == "no", 77, Q18A),
        Q18B.ifelse = ifelse(Q17.chr == "no", 77, Q18B),
@@ -302,7 +307,9 @@ columns.for.ifelses <- cols.to.numeric %>%
        #MANUALLY remove outliers from trip costs
        Q31.rm.outlier = ifelse(Survey == "PPP_SCAN_0153", 77, Q31),
        Q32.rm.outlier = ifelse(Survey == "PPP_SCAN_0164", 77, Q32),
-       Q32.rm.outlier = ifelse(Survey == "PPP_SCAN_0166", 77, Q32.rm.outlier))
+       Q32.rm.outlier = ifelse(Survey == "PPP_SCAN_0166", 77, Q32.rm.outlier),
+       #ANOTHER VARIABLE FOR THE 2026 FACT SHEET
+       Q41.bottomfish = ifelse(Q41B == 1 | Q41C == 1, 1, 2)) #1 = yes, 2 = no; for fact sheet tables to avoid confusion between Q #'s and results
 
 
 #Remove 0's for catch quantity questions
@@ -458,7 +465,10 @@ create.full.sample.column <- create.island.column %>%
                               "1" = "full sample",
                               "2" = "full sample",
                               "3" = "full sample",
-                              "4" = "full sample"))
+                              "4" = "full sample"),
+         Q4.primary.bottomfish = recode(Q4.bottomfish, "bottomfish" = "Q4.primary.bottomfish"), #for fact sheet tables to avoid confusion between Q #'s and results)
+         Q10.11.total.mid.ifelse = rowSums(across(Q10.ifelse:Q11.ifelse), 
+                                                  na.rm = T))
          # #Primary target ##9/17/25: Tried this code to do data breakdown by fishery for SAFE report, gave few results, using >40% for each like we did in bottomfish section
          # primary.target = ifelse(Q4D.mid > Q4A.mid + Q4B.mid + Q4C.mid + 
          #                           Q4E.mid + Q4F.mid, "trolling",
